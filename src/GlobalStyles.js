@@ -23,6 +23,9 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    @media (prefers-color-scheme: dark){
+      background-color: black;
+    }
 
     h1 {
       font-size: 2rem;
