@@ -13,7 +13,6 @@ import Grid from "./Grid/index"
 import Thumb from "./Thubnails";
 import Spin from "./Spinner";
 import SearchBar from "./SearchBar";
-import Button from "./Button";
 
 //Hook
 import useHomeFetch from "../Hooks/useHomeFetch";
@@ -50,8 +49,7 @@ const Home = () => {
                 />
             ))}
         </Grid>
-        { loading? <Spin/>: null}
-        {state.page < state.total_pages && !loading ? <Button text ="Load More"/> : null }
+        <Spin/>
         </>
     );
 }

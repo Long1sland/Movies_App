@@ -1,11 +1,11 @@
 import React from "react";
-import { Image } from "./Thumb.styles";
+import { Image, Container } from "./Thumb.styles";
 
 const Thumb = ({ image, movieId, clickable }) => {
     return (
-        <div>
+        <Container>
             <Image src = {image} alt = "movie thumb"/>
-        </div>
+        </Container>
     );
 }
  
