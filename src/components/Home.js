@@ -13,6 +13,7 @@ import Grid from "./Grid/index"
 import Thumb from "./Thubnails";
 import Spin from "./Spinner";
 import SearchBar from "./SearchBar";
+import Button from "./Button";
 
 //Hook
 import useHomeFetch from "../Hooks/useHomeFetch";
@@ -37,7 +38,7 @@ const Home = () => {
 
         <SearchBar setSearchTerm = {setSearchTerm}/>
 
-        <Grid header = "Popular Movies">
+        <Grid header = {searchTerm? "Results" : "Popular Movies"}>
             {state.results.map( movie => (
                 <Thumb
                 key = {movie.id}
@@ -49,7 +50,8 @@ const Home = () => {
                 />
             ))}
         </Grid>
-        <Spin/>
+        { loading? <Spin/>: null}
+        {state.page < state.total_pages && !loading ? <Button text ="Load More"/> : null }
         </>
     );
 }

@@ -9,11 +9,13 @@ const initialState = {
     total_results: 0
 }
 
+
 const useHomeFetch = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [state, setState] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [loadMore, setLoadMore] =useState(false)
 
 
     const fetchMovies = async (page, searchTerm) => {
@@ -41,11 +43,28 @@ const useHomeFetch = () => {
         
         setLoading(false)
     }
-    
+
+setInterval(() => {
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
+        setLoadMore(true)
+    }
+}, 1000)
 
     useEffect(() => {
-        fetchMovies(1, searchTerm)
+        if(!loadMore){return}
+
+        fetchMovies(state.page + 1)
+        
+        setLoadMore(false)
+    }, [loadMore])
+    
+    useEffect(() => {
+
+        fetchMovies( 1, searchTerm)
+        
+        
     }, [searchTerm])
+
 console.log(state)
     return { state, loading, error, searchTerm, setSearchTerm };
 }
