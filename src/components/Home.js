@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from "react";
 
 
-
 //Config
 import API from "../API"
 
@@ -13,6 +12,7 @@ import Grid from "./Grid/index"
 import Thumb from "./Thubnails";
 import Spin from "./Spinner";
 import SearchBar from "./SearchBar";
+import Button from "./Buttons";
 
 //Hook
 import useHomeFetch from "../Hooks/useHomeFetch";
@@ -23,7 +23,7 @@ import noImage from "../images/no_image.jpg"
 
 const Home = () => {
 
-    const {state, loading, error, searchTerm, setSearchTerm} = useHomeFetch()
+    const {state, loading, error, searchTerm, setSearchTerm, setLoadMore} = useHomeFetch()
     return (
 
         <>
@@ -49,7 +49,9 @@ const Home = () => {
                 />
             ))}
         </Grid>
-        <Spin/>
+        {loading? <Spin/> : null}
+        {state.page < state.total_pages ?<Button text = {"Load More"} load = { () => {setLoadMore(true)} } /> : null}
+        
         </>
     );
 }

@@ -44,29 +44,21 @@ const useHomeFetch = () => {
         setLoading(false)
     }
 
-setInterval(() => {
-    if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
-        setLoadMore(true)
-    }
-}, 1000)
-
     useEffect(() => {
-        if(!loadMore){return}
-
-        fetchMovies(state.page + 1)
-        
+        if(!loadMore) return
+        fetchMovies(state.page + 1, searchTerm)
         setLoadMore(false)
-    }, [loadMore])
+    }, [loadMore, state.page])
     
     useEffect(() => {
-
+        setState(initialState)
         fetchMovies( 1, searchTerm)
         
         
     }, [searchTerm])
 
 console.log(state)
-    return { state, loading, error, searchTerm, setSearchTerm };
+    return { state, loading, error, searchTerm, setSearchTerm, setLoadMore };
 }
  
 export default useHomeFetch;
