@@ -1,11 +1,19 @@
 import React from "react";
-import { Image, Container } from "./Thumb.styles";
+import { Image, Wrapper } from "./Thumb.styles";
+import { Link } from "react-router-dom";
 
 const Thumb = ({ image, movieId, clickable }) => {
     return (
-        <Container>
+        <Wrapper>
+            {clickable ? 
+            <Link to = {`/Movies_App/${movieId}`}>
             <Image src = {image} alt = "movie thumb"/>
-        </Container>
+            </Link> :
+            
+            <Image src = {image} alt = "movie thumb"/>
+            }
+            
+        </Wrapper>
     );
 }
  

@@ -12,7 +12,6 @@ import Grid from "./Grid/index"
 import Thumb from "./Thubnails";
 import Spin from "./Spinner";
 import SearchBar from "./SearchBar";
-import Button from "./Buttons";
 
 //Hook
 import useHomeFetch from "../Hooks/useHomeFetch";
@@ -23,7 +22,8 @@ import noImage from "../images/no_image.jpg"
 
 const Home = () => {
 
-    const {state, loading, error, searchTerm, setSearchTerm, setLoadMore} = useHomeFetch()
+    const {state, loading, error, searchTerm, setSearchTerm} = useHomeFetch()
+
     return (
 
         <>
@@ -36,22 +36,24 @@ const Home = () => {
         /> : null}
 
         <SearchBar setSearchTerm = {setSearchTerm}/>
-
         <Grid header = {searchTerm? "Results" : "Popular Movies"}>
-            {state.results.map( movie => (
-                <Thumb
+            {state.results.map( movie => {
+
+             return <Thumb
                 key = {movie.id}
                 clickable
                 image = {
                     movie.poster_path? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path : noImage
                 }
                 movieId = {movie.id}
-                />
-            ))}
+                />}
+                
+            
+                
+            )}
         </Grid>
-        {loading? <Spin/> : null}
-        {state.page < state.total_pages ?<Button text = {"Load More"} load = { () => {setLoadMore(true)} } /> : null}
-        
+        <Spin/>
+        {error? alert("Somethings not right. Try checking your internet connection and try again.") : null}
         </>
     );
 }

@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
+import _ from 'lodash';
+import { chunk } from "lodash";
 
-import API from "../API"
+import API from "../API";
 
 const initialState = {
     page: 0,
@@ -16,6 +18,7 @@ const useHomeFetch = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [loadMore, setLoadMore] =useState(false)
+    const [page, setPage] = useState(1)
 
 
     const fetchMovies = async (page, searchTerm) => {
@@ -31,6 +34,8 @@ const useHomeFetch = () => {
                 results: page > 1 ? [...prev.results, ...movies.results] : [...movies.results]
             }));
 
+            console.log(movies)
+
             
         }
 
@@ -44,18 +49,33 @@ const useHomeFetch = () => {
         setLoading(false)
     }
 
-    useEffect(() => {
-        if(!loadMore) return
-        fetchMovies(state.page + 1, searchTerm)
-        setLoadMore(false)
-    }, [loadMore, state.page])
+// to delay 
+    var debounce = useCallback(
+        _.debounce(() => setPage(page + 1), 500,)
+        
+    )
+
+
+    window.onscroll = () => {
+
+        if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
+            
+               debounce();
+            
+        }
+        
+    }
+    
+ 
     
     useEffect(() => {
-        setState(initialState)
-        fetchMovies( 1, searchTerm)
+        
+        fetchMovies( page, searchTerm)    
         
         
-    }, [searchTerm])
+    }, [searchTerm, page])
+
+    
 
 console.log(state)
     return { state, loading, error, searchTerm, setSearchTerm, setLoadMore };

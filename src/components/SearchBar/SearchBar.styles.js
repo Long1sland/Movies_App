@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
+  position: sticky;
+  top: 0;
   align-items: center;
   height: 100px;
   background: var(--darkGrey);
   padding: 0 20px;
+  z-index: 100;
 `;
 
 export const Content = styled.div`

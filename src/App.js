@@ -1,15 +1,31 @@
 import React from 'react';
+
+//Routing
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+
+//Styles
 import { GlobalStyle } from './GlobalStyles';
+
+//Components
 import Header from './components/Header';
-import Home from "./components/Home"
+import Home from "./components/Home";
+import Movie from './components/Movie';
+import NotFound from './components/NotFound';
+
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter>
+      
       <Header/>
-      <Home/>
+      <Routes>
+        
+        <Route path = "/Movies_App" element = {<Home/>}/>
+        <Route path = "/Movies_App/:movieId" element = {<Movie/>}/>
+        <Route path = '/*' element = {<NotFound/>}/>
+      </Routes>
       <GlobalStyle/>
-    </div>
+    </BrowserRouter>
   );
 }
 
