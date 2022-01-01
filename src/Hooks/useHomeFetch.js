@@ -50,7 +50,7 @@ const useHomeFetch = () => {
     }
 
 // to delay 
-    var debounce = useCallback(
+    const debounce = useCallback(
         _.debounce(() => setPage(page + 1), 500,)
         
     )
@@ -65,8 +65,8 @@ const useHomeFetch = () => {
         }
         
     }
-    
- 
+
+      
     
     useEffect(() => {
         

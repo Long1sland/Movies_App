@@ -18,6 +18,7 @@ import useHomeFetch from "../Hooks/useHomeFetch";
 
 //Image
 import noImage from "../images/no_image.jpg"
+import BackToTop from "./backToTop";
 
 
 const Home = () => {
@@ -52,6 +53,7 @@ const Home = () => {
                 
             )}
         </Grid>
+        <BackToTop/>
         <Spin/>
         {error? alert("Somethings not right. Try checking your internet connection and try again.") : null}
         </>
