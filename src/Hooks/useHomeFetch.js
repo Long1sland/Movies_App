@@ -4,6 +4,8 @@ import { chunk } from "lodash";
 
 import API from "../API";
 
+import { isPersistedState } from "../helpers";
+
 const initialState = {
     page: 0,
     results: [],
@@ -69,14 +71,51 @@ const useHomeFetch = () => {
       
     
     useEffect(() => {
+
+        if(!searchTerm) {
+            const sessionStorage = isPersistedState("homeState")
+
+            if(sessionStorage){
+
+                if(sessionStorage.page < page){
+                    
+                    console.log("Grabbing from API")
+                    fetchMovies( page, searchTerm)
+                    return;
+
+                }
+
+                else{
+                    
+                    console.log("Grabbing from sessionStroage")
+                    setState(sessionStorage)
+                    return;
+                }
+            }
+
+            else {
+                console.log("grabbing from API")
+                fetchMovies(page, searchTerm)
+                return;
+            }
+        }
+
+        fetchMovies(page, searchTerm)
+        return;
+
         
-        fetchMovies( page, searchTerm)    
+    
         
         
-    }, [searchTerm, page])
+    }, [searchTerm, page]) 
+    
+    useEffect(() => {
+        if(!searchTerm){
+            sessionStorage.setItem("homeState", JSON.stringify(state))
+        }
+    }, [state, searchTerm])
 
     
-
 console.log(state)
     return { state, loading, error, searchTerm, setSearchTerm, setLoadMore };
 }
